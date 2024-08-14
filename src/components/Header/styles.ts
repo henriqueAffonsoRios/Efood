@@ -7,7 +7,6 @@ export const HeaderPage = styled.div`
 `
 
 export const Imagem = styled.div<Props>`
-  max-width: 2031.81px;
   width: 100%;
   max-height: ${(props) => (props.background === 'dark' ? '186px' : '360px')};
   height: 100%;

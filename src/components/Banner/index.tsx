@@ -27,12 +27,12 @@ const Banner = () => {
   }
 
   return (
-    <div className="container">
-      <ImgBanner style={{ backgroundImage: `url(${catalogoServico.capa})` }}>
+    <ImgBanner style={{ backgroundImage: `url(${catalogoServico.capa})` }}>
+      <div className="container">
         <h3>{catalogoServico.tipo}</h3>
         <h1>{catalogoServico.titulo}</h1>
-      </ImgBanner>
-    </div>
+      </div>
+    </ImgBanner>
   )
 }
 
