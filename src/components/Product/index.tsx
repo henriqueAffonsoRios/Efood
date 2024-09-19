@@ -1,133 +1,83 @@
-import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import RestaurantRatingImg from '../../assets/icons/estrela.png'
-import Tag from '../../components/Tag'
-import { CardapioItem } from '../../services/api'
-import Botao from '../Button'
-import ModalPoupap from '../Modal'
-import {
-  CardConteiner,
-  CardRestaurant,
-  ContainerDescritivo,
-  Imagem,
-  Infos,
-  LineSection,
-  RatingStar
-} from './styles'
+import { useState } from 'react'
 
-export type Efood = {
-  id: string
-  capa: string
-  tipo: string
-  destacado: boolean
-  titulo: string
-  avaliacao: number
+import { Modal, ModalContent, ProductCard } from './styles'
+
+import close from '../../assets/images/close.svg'
+import { useDispatch } from 'react-redux'
+import { add, open } from '../../store/reducers/cart'
+
+type Props = {
+  id: number
+  nome: string
   descricao: string
-  cardapio: CardapioItem[]
+  foto: string
+  porcao: string
+  preco: number
 }
 
-type ProductProps = {
-  image: string
-  infos: string[]
-  title: string
-  nota?: number
-  description: string
-  to: string
-  background: 'light' | 'dark'
-  currentItem: CardapioItem | null
-  shouldTruncateDescription?: boolean
-  id: string
+export const formataPreco = (preco = 0) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(preco)
 }
 
-const Product: React.FC<ProductProps> = ({
-  image,
-  infos,
-  title,
-  nota,
-  description,
-  to,
-  background,
-  currentItem,
-  shouldTruncateDescription = false
-}) => {
-  const location = useLocation()
-  const [isModalVisible, setIsModalVisible] = useState(false)
+const Product = ({ id, nome, descricao, porcao, foto, preco }: Props) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const dispatch = useDispatch()
 
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible)
+  const addToCart = () => {
+    const product = { id, nome, descricao, porcao, foto, preco }
+    dispatch(add(product))
+    dispatch(open())
   }
 
-  const buttonText = location.pathname.startsWith(`/perfil/`)
-    ? 'Adicionar ao carrinho'
-    : 'Saiba mais'
-
-  const getTruncatedDescription = (description: string) => {
-    if (description && description.length > 160) {
-      return description.slice(0, 160) + '...'
+  const showModal = () => {
+    if (isVisible) {
+      return 'isVisible'
     }
-    return description
+    return ''
   }
 
-  const isPerfilPage = location.pathname.startsWith(`/perfil/`)
+  const getDescription = (descricao: string) => {
+    if (descricao.length > 150) {
+      return descricao.slice(0, 150) + '...'
+    }
+    return descricao
+  }
 
   return (
-    <div className="container">
-      <CardConteiner>
-        <CardRestaurant>
-          <Imagem style={{ backgroundImage: `url(${image})` }} />
-          <Infos>
-            {infos.map((info, index) => (
-              <Tag key={index}>{info}</Tag>
-            ))}
-          </Infos>
-          <ContainerDescritivo>
-            <LineSection>
-              <h3 className="tituloCard">{title}</h3>
-              <div className="Rating">
-                <h3 className="nota">{nota}</h3>
-                <RatingStar
-                  style={{ backgroundImage: `url(${RestaurantRatingImg})` }}
+    <>
+      <ProductCard>
+        <img src={foto} alt="Foto do restaurante" />
+        <h2>{nome}</h2>
+        <p>{getDescription(descricao)}</p>
+        <button onClick={() => setIsVisible(true)}>Adicione ao carrinho</button>
+      </ProductCard>
+      <Modal className={showModal()}>
+        <ModalContent>
+          <div>
+            <img src={foto} alt="Foto do prato" />
+            <div>
+              <div>
+                <h2>{nome}</h2>
+                <img
+                  src={close}
+                  onClick={() => setIsVisible(false)}
+                  alt="Clique para fechar"
                 />
               </div>
-            </LineSection>
-            <p>
-              {isPerfilPage && shouldTruncateDescription
-                ? getTruncatedDescription(description)
-                : description}
-            </p>
-            {isPerfilPage ? (
-              <Botao
-                type="button"
-                onClick={toggleModal}
-                title={buttonText}
-                background={background}
-              >
-                {buttonText}
-              </Botao>
-            ) : (
-              <Botao
-                type="link"
-                to={to}
-                title={buttonText}
-                background={background}
-              >
-                {buttonText}
-              </Botao>
-            )}
-          </ContainerDescritivo>
-        </CardRestaurant>
-      </CardConteiner>
-      {isModalVisible && currentItem && (
-        <ModalPoupap
-          onClose={toggleModal}
-          foto={currentItem.foto}
-          descricao={currentItem.descricao}
-          porcao={currentItem.porcao}
-          preco={currentItem.preco}
-          nome={currentItem.nome}
-        />
-      )}
-    </div>
+              <p>{descricao}</p>
+              <p>Porção: {porcao}</p>
+              <button
+                onClick={addToCart}
+              >{`Adicionar ao carrinho - ${formataPreco(preco)}`}</button>
+            </div>
+          </div>
+        </ModalContent>
+        <div className="overlay" onClick={() => setIsVisible(false)}></div>
+      </Modal>
+    </>
   )
 }
 

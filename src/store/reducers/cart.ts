@@ -1,29 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-export interface CartItem {
-  id: number
-  foto: string
-  descricao: string
-  preco: number
-  nome: string
-  porcao: string
-}
+import { Cardapio } from '../../pages/Home'
 
 type CartState = {
-  items: CartItem[]
+  items: Cardapio[]
   isOpen: boolean
+  isPayed: boolean
 }
 
 const initialState: CartState = {
   items: [],
-  isOpen: false
+  isOpen: false,
+  isPayed: false
 }
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<CartItem>) => {
+    add: (state, action: PayloadAction<Cardapio>) => {
       state.items.push(action.payload)
     },
     open: (state) => {
@@ -39,4 +33,5 @@ const cartSlice = createSlice({
 })
 
 export const { add, open, close, remove } = cartSlice.actions
+
 export default cartSlice.reducer

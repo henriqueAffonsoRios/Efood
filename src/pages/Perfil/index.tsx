@@ -1,34 +1,28 @@
 import { useParams } from 'react-router-dom'
-import Banner from '../../components/Banner'
-import Header from '../../components/Header'
+
+import { useGetRestaurantSelectedQuery } from '../../services/api'
+
+import Footer from '../../components/Footer'
+import HeaderProfile from '../../components/HeaderProfile'
 import ProductList from '../../components/ProductList'
 
-import { useGetFeatureEfoodQuery } from '../../services/api'
+const Profile = () => {
+  const { id } = useParams()
 
-type Params = {
-  id: string
-}
-
-const Perfil = () => {
-  const { id } = useParams<Params>()
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const { data: listaRestaurantMenu } = useGetFeatureEfoodQuery(id!)
+  const { data: restaurante } = useGetRestaurantSelectedQuery(id!)
 
-  if (listaRestaurantMenu) {
-    return (
-      <>
-        <Header background={'dark'} />
-        <Banner />
-        <ProductList
-          title=""
-          background={'dark'}
-          efoods={listaRestaurantMenu.cardapio}
-          isCardapio
-        />
-      </>
-    )
+  if (!restaurante) {
+    return <h3>Carregando...</h3>
   }
-  return <h4>Carregando ...</h4>
+
+  return (
+    <>
+      <HeaderProfile restaurante={restaurante} />
+      <ProductList produtos={restaurante.cardapio} />
+      <Footer />
+    </>
+  )
 }
 
-export default Perfil
+export default Profile

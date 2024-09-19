@@ -1,42 +1,33 @@
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 import { cores } from '../../styles'
 
-export const Footers = styled.footer`
-  height: 298px;
-  background-color: ${cores.bege};
-`
-export const SectionFooter = styled.div`
+export const FooterStyle = styled.footer`
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: ${cores.bgFooter};
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .imagemLogo {
-    width: 125px;
-    height: 57.5px;
-    margin: 40px 0 32.5px 0;
-  }
-`
-
-export const RedeSociais = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 88px;
-  height: 24px;
-  gap: 8px;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
-`
-export const Titulo = styled.h2`
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 11.72px;
   text-align: center;
+`
+
+export const Logo = styled.img`
+  width: 125px;
+`
+
+export const List = styled.ul`
+  margin-top: 32px;
+  margin-bottom: 80px;
+  display: flex;
+  list-style: none;
+`
+
+export const ListItem = styled.li`
+  margin-right: 8px;
+`
+
+export const Copyrights = styled.p`
   max-width: 480px;
-  width: 100%;
-  height: 24px;
-  margin: 80px auto 40px auto;
+  font-size: 10px;
 `

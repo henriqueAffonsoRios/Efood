@@ -1,82 +1,123 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
-import { TagContainer } from '../Tag/styles'
 
-export const CardRestaurant = styled.div`
-  width: 472px;
-  height: 398px;
+export const ProductCard = styled.div`
+  width: 320px;
+  padding: 8px;
+  background-color: ${cores.fontColor};
+  color: ${cores.bgFooter};
+  display: flex;
+  flex-direction: column;
   position: relative;
-`
-export const CardConteiner = styled.div``
 
-export const Imagem = styled.div`
-  background-repeat: no-repeat;
-  width: 472px;
-  height: 217px;
-  object-fit: cover;
-  background-size: 100%;
-`
+  img {
+    height: 170px;
+    object-fit: cover;
+  }
 
-export const ContainerDescritivo = styled.div`
-  width: 472px;
-  height: 181px;
-  border: 1px solid ${cores.vermelho};
-  border-top: 0;
-
-  h3 {
-    font-size: 18px;
-    font-weight: 700;
-    text-align: left;
+  h2 {
+    margin: 8px;
+    font-weight: 900;
+    font-size: 16px;
   }
 
   p {
-    width: 456px;
-    height: 88px;
     font-size: 14px;
-    font-weight: 400;
-    margin: 16px 8px;
-    line-height: 19.09px;
+    margin-bottom: 8px;
+    color: ${cores.bgFooter};
   }
 
-  ${TagContainer} {
-    margin: 0px 0px 8px 8px;
+  button {
+    color: ${cores.fontColor};
+    background-color: ${cores.bgFooter};
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    line-height: 16px;
+    cursor: pointer;
   }
 `
-export const RatingStar = styled.div`
-  width: 21px;
-  height: 21px;
-  padding: 0.5px 0px 0.5px 0px;
-  gap: 0px;
-  opacity: 0px;
-`
-export const LineSection = styled.div`
-  display: flex;
+
+export const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 8px 0 7px;
+  z-index: 1;
+  display: none;
 
-  .tituloCard {
-    height: 21px;
-  }
-  .nota {
-    width: 26px;
-    height: 21px;
-  }
-
-  .Rating {
-    width: 51px;
-    height: 21px;
+  &.isVisible {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
   }
 `
-export const Infos = styled.div`
-  position: absolute;
-  top: 16px;
-  right: 16px;
 
-  ${TagContainer} {
-    margin: 0 0 0 8px;
+export const ModalContent = styled.div`
+  position: relative;
+  max-width: 1024px;
+  z-index: 1;
+
+  > div {
+    display: flex;
+    padding: 0 0 32px 32px;
+    background-color: ${cores.fontColor};
+    color: ${cores.bgFooter};
+
+    > img {
+      width: 280px;
+      height: 280px;
+      margin-right: 24px;
+      object-fit: cover;
+      margin-top: 32px;
+    }
+
+    div {
+      display: block;
+
+      div {
+        display: flex;
+        justify-content: space-between;
+
+        h2 {
+          font-size: 21px;
+          font-weight: 900;
+          margin-top: 32px;
+        }
+
+        img {
+          height: 16px;
+          width: 16px;
+          margin: 8px;
+          cursor: pointer;
+        }
+      }
+
+      p {
+        margin: 16px 0;
+        font-size: 14px;
+      }
+
+      button {
+        border: none;
+        padding: 4px 7px;
+        font-size: 14px;
+        font-weight: 700;
+        background-color: ${cores.bgFooter};
+        color: ${cores.fontColor};
+      }
+    }
   }
 `
