@@ -72,7 +72,7 @@ export const ModalContent = styled.div`
 
   > div {
     display: flex;
-    padding: 0 0 32px 32px;
+    padding: 0 32px 32px 32px;
     background-color: ${cores.fontColor};
     color: ${cores.bgFooter};
 
@@ -90,6 +90,7 @@ export const ModalContent = styled.div`
       div {
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         h2 {
           font-size: 21px;
@@ -117,6 +118,7 @@ export const ModalContent = styled.div`
         font-weight: 700;
         background-color: ${cores.bgFooter};
         color: ${cores.fontColor};
+        cursor: pointer;
       }
     }
   }
